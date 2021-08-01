@@ -7,6 +7,14 @@ room_size_y = 1
 room_size_z = 1
 
 
+# Calculate quaternion
+def cal_quaternion(main_pos_x, main_pos_y, main_pos_z, sub_pos_x, sub_pos_y, sub_pos_z):
+    quaternion_data = [[main_pos_x - sub_pos_x, main_pos_y - sub_pos_y, main_pos_z - sub_pos_z]]
+    clean_pose_data(quaternion_data)
+
+def clean_pose_data(pose_data, quaternion_data):
+    pose_data[0, quaternion_data[0], quaternion_data[1], quaternion_data[2], 0]
+
 class PoseDetector:
     def __init__(self, mode=False, complexity=1, smooth=True, detection=0.5, tracking=0.5):
         self.mode = mode
@@ -31,16 +39,6 @@ class PoseDetector:
         pose_data = []
         if self.results.pose_world_landmarks:
             for id, lm in enumerate(self.results.pose_world_landmarks.landmark):
-                h, w, c = img.shape
-                cx, cy, cz = int(lm.x * w), int(lm.y * h), abs(int(lm.z * 10))
-                # pos_x, pos_y, pos_z = int(lm.x * room_size_x), int(lm.y * room_size_y), int(lm.z * room_size_z)
-                # pos_x, pos_y, pos_z = lm.x, lm.y, lm.z
                 pose_data.append([id, lm.x, lm.y, lm.z])
-
+            cal_quaternion()
         return pose_data
-
-    # 쓰다 만것(없애도 됨)
-    def cal_rotate(self, main_pos_x, main_pos_y, main_pos_z, sub_pos_x, sub_pos_y, sub_pos_z):
-        rotate_data = []
-
-        return rotate_data

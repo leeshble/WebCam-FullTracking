@@ -3,8 +3,8 @@ import time
 import pose_module as pm
 import osc_module as osc
 while True:
-    # 비디오 또는 웹캠 불러ㄱ오기
-    cap = cv2.VideoCapture('2.mp4')
+    # 비디오 또는 웹캠 불러오기
+    cap = cv2.VideoCapture('Examples/2.mp4')
     # 프레임 확인을 위한 변수
     pTime = 0
     isclosed = 0
@@ -15,7 +15,7 @@ while True:
             img = detector.find_pose(img)
             pose_data = detector.find_position(img)
 
-
+            # Check pose_data
             print(pose_data)
 
             # Create device
@@ -42,24 +42,28 @@ while True:
             tracker5.send_osc()
             tracker6.send_osc()
 
+            # FPS count
             cTime = time.time()
             fps = 1/(cTime-pTime)
             pTime = cTime
-
             cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
 
+            # Show img
             cv2.imshow("Capture1", img)
 
+            # Stop when user press 'ESC'
             key = cv2.waitKey(1) & 0xFF
             if key == 27:
                 isclosed = 1
+                break
 
         else:
             break
 
-    # To break the loop if it is closed manually
+    # Stop When 'isclosed == 1'
     if isclosed:
         break
 
-cap1.release()
+# Clean
+cap.release()
 cv2.destroyAllWindows()

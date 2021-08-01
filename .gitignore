@@ -1,2 +1,9 @@
 
 *.mp4
+.idea/inspectionProfiles/profiles_settings.xml
+__pycache__/pose_module.cpython-39.pyc
+__pycache__/osc_module.cpython-39.pyc
+.idea/WebCam-FullTracking.iml
+.idea/vcs.xml
+.idea/modules.xml
+.idea/misc.xml
