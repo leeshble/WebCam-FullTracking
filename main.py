@@ -1,69 +1,60 @@
 import cv2
 import time
 import pose_module as pm
-import osc_module as osc
-while True:
-    # 비디오 또는 웹캠 불러오기
-    cap = cv2.VideoCapture('Examples/2.mp4')
-    # 프레임 확인을 위한 변수
-    pTime = 0
-    isclosed = 0
-    detector = pm.PoseDetector()
+
+
+def main(input):
+    # Video Capture
+    cap = cv2.VideoCapture(input)
     while True:
-        success, img = cap.read()
-        if success:
-            img = detector.find_pose(img)
-            pose_data = detector.find_position(img)
+        # Variables for check FPS
+        p_time = 0
+        # Variable to check if the user has canceled the program
+        is_closed = 0
 
-            # Check pose_data
-            print(pose_data)
+        # pose_module start
+        detector = pm.PoseDetector()
+        while True:
+            cap.grab()
+            success, frame = cap.retrieve()
+            # success, frame = cap.read()
+            # If video capture was successful
+            if success:
+                # Get frame that drawn pose estimation and tracker data
+                frame = detector.set_pose_data(frame)
 
-            # Create device
-            tracker1 = osc.Device(index=1)
-            tracker2 = osc.Device(index=2)
-            tracker3 = osc.Device(index=3)
-            tracker4 = osc.Device(index=4)
-            tracker5 = osc.Device(index=5)
-            tracker6 = osc.Device(index=6)
+                # FPS count
+                c_time = time.time()
+                fps = 1 / (c_time - p_time)
+                p_Time = c_time
 
-            # Set transform of device
-            tracker1.set_transform(pose_data[13][1], pose_data[13][2], pose_data[13][3], 0.0, 0.0, 0.0, 0.0)
-            tracker2.set_transform(pose_data[14][1], pose_data[14][2], pose_data[14][3], 0.0, 0.0, 0.0, 0.0)
-            tracker3.set_transform(pose_data[25][1], pose_data[25][2], pose_data[25][3], 0.0, 0.0, 0.0, 0.0)
-            tracker4.set_transform(pose_data[26][1], pose_data[26][2], pose_data[26][3], 0.0, 0.0, 0.0, 0.0)
-            tracker5.set_transform(pose_data[27][1], pose_data[27][2], pose_data[27][3], 0.0, 0.0, 0.0, 0.0)
-            tracker6.set_transform(pose_data[28][1], pose_data[28][2], pose_data[28][3], 0.0, 0.0, 0.0, 0.0)
+                # Put FPS count on frame
+                cv2.putText(frame, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
 
-            # Send device position to VMT
-            tracker1.send_osc()
-            tracker2.send_osc()
-            tracker3.send_osc()
-            tracker4.send_osc()
-            tracker5.send_osc()
-            tracker6.send_osc()
+                # Show img
+                cv2.imshow("Capture1", frame)
 
-            # FPS count
-            cTime = time.time()
-            fps = 1/(cTime-pTime)
-            pTime = cTime
-            cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
+                # Stop when user press 'ESC'
+                key = cv2.waitKey(1) & 0xFF
+                if key == 27:
+                    isclosed = 1
+                    break
 
-            # Show img
-            cv2.imshow("Capture1", img)
-
-            # Stop when user press 'ESC'
-            key = cv2.waitKey(1) & 0xFF
-            if key == 27:
-                isclosed = 1
+            # Stop When 'isclosed == 1'
+            if isclosed:
                 break
 
-        else:
-            break
+    # Retrieve resources
+    cap.release()
+    cv2.destroyAllWindows()
 
-    # Stop When 'isclosed == 1'
-    if isclosed:
-        break
 
-# Clean
-cap.release()
-cv2.destroyAllWindows()
+if __name__ == "__main__":
+    # ip camera test
+    #main('http://172.30.1.7:8080/videofeed')
+
+    # video test
+    main('Examples/2.mp4')
+
+    # webcam test
+    #main(0)
