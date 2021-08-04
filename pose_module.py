@@ -11,7 +11,7 @@ height = 0.  # y-axis translation
 waistS = 50.
 
 # Array witch stored information of each body parts(mediapipe landmarks numbers and tracker information)
-# (body parts index, "device name", "device index(name within VMT)", landmark number for calculate angel(Two value))
+# (body parts index, "device name", "device index(name within VMT)", landmark number for calculate angle(Two value))
 body_parts_array = [
     (mp.solutions.pose.PoseLandmark.LEFT_WRIST, "LHR-leftHand", "Character1_LeftHand", (15, 17)),
     (mp.solutions.pose.PoseLandmark.RIGHT_WRIST, "LHR-rightHand", "Character1_RightHand", (16, 18)),
@@ -56,7 +56,7 @@ class PoseDetector:
 
         # Prevent error when self.results.pose_world
         try:
-            # If self.results.pose_world_landmarks is avaliable
+            # If self.results.pose_world_landmarks is available
             if self.results.pose_world_landmarks:
                 landmarks = self.results.pose_world_landmarks.landmark
 
