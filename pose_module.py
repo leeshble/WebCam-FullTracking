@@ -11,20 +11,20 @@ height = 0.  # y-axis translation
 waistS = 50.
 
 # Array witch stored information of each body parts(mediapipe landmarks numbers and tracker information)
-# (body parts index, "device name", "device index(name within VMT)", landmark number for calculate angle(Two value))
+# (array index, body parts index, "device name", "device index(name within VMT)", landmark number for calculate angle(Two value))
 body_parts_array = [
-    (mp.solutions.pose.PoseLandmark.LEFT_WRIST, "LHR-leftHand", "Character1_LeftHand", (15, 17)),
-    (mp.solutions.pose.PoseLandmark.RIGHT_WRIST, "LHR-rightHand", "Character1_RightHand", (16, 18)),
-    (mp.solutions.pose.PoseLandmark.LEFT_ELBOW, "LHR-leftElbow", "Character1_LeftForeArm", (13, 15)),
-    (mp.solutions.pose.PoseLandmark.RIGHT_ELBOW, "LHR-rightElbow", "Character1_RightForeArm", (14, 16)),
-    (mp.solutions.pose.PoseLandmark.LEFT_KNEE, "LHR-leftKnee", "Character1_LeftLeg", (25, 27)),
-    (mp.solutions.pose.PoseLandmark.RIGHT_KNEE, "LHR-rightKnee", "Character1_RightLeg", (26, 28)),
-    (mp.solutions.pose.PoseLandmark.LEFT_ANKLE, "LHR-leftFoot", 11, (27, 29)),
-    (mp.solutions.pose.PoseLandmark.RIGHT_ANKLE, "LHR-rightFoot", 12, (28, 30)),
-    (mp.solutions.pose.PoseLandmark.LEFT_HIP, "LHR-leftHip", "Character1_LeftUpLeg", (23, 25)),
-    (mp.solutions.pose.PoseLandmark.RIGHT_HIP, "LHR-rightHip", "Character1_RightUpLeg", (24, 26)),
-    (mp.solutions.pose.PoseLandmark.LEFT_SHOULDER, "LHR-leftShoulder", "Character1_LeftShoulder", (11, 13)),
-    (mp.solutions.pose.PoseLandmark.RIGHT_SHOULDER, "LHR-rightShoulder", "Character1_RightShoulder", (12, 14))
+    (0, mp.solutions.pose.PoseLandmark.LEFT_WRIST, "LHR-leftHand", "Character1_LeftHand", (15, 17)),
+    (1, mp.solutions.pose.PoseLandmark.RIGHT_WRIST, "LHR-rightHand", "Character1_RightHand", (16, 18)),
+    (2, mp.solutions.pose.PoseLandmark.LEFT_ELBOW, "LHR-leftElbow", "Character1_LeftForeArm", (13, 15)),
+    (3, mp.solutions.pose.PoseLandmark.RIGHT_ELBOW, "LHR-rightElbow", "Character1_RightForeArm", (14, 16)),
+    (4, mp.solutions.pose.PoseLandmark.LEFT_KNEE, "LHR-leftKnee", "Character1_LeftLeg", (25, 27)),
+    (5, mp.solutions.pose.PoseLandmark.RIGHT_KNEE, "LHR-rightKnee", "Character1_RightLeg", (26, 28)),
+    (6, mp.solutions.pose.PoseLandmark.LEFT_ANKLE, "LHR-leftFoot", 11, (27, 29)),
+    (7, mp.solutions.pose.PoseLandmark.RIGHT_ANKLE, "LHR-rightFoot", 12, (28, 30)),
+    (8, mp.solutions.pose.PoseLandmark.LEFT_HIP, "LHR-leftHip", "Character1_LeftUpLeg", (23, 25)),
+    (9, mp.solutions.pose.PoseLandmark.RIGHT_HIP, "LHR-rightHip", "Character1_RightUpLeg", (24, 26)),
+    (10, mp.solutions.pose.PoseLandmark.LEFT_SHOULDER, "LHR-leftShoulder", "Character1_LeftShoulder", (11, 13)),
+    (11, mp.solutions.pose.PoseLandmark.RIGHT_SHOULDER, "LHR-rightShoulder", "Character1_RightShoulder", (12, 14))
 ]
 
 
@@ -78,9 +78,8 @@ class PoseDetector:
 
 # Set tracker data without waist
 def set_tracker_data1(landmarks):
-    print('set_tracker_data1')
     tracker_data = []
-    for part_name, serial, body_part, NBindex in body_parts_array:
+    for index, part_name, serial, body_part, NBindex in body_parts_array:
         # Get angle from landmarks
         angle = calc_angle(landmarks[NBindex[0]], landmarks[NBindex[1]])
 
@@ -94,8 +93,8 @@ def set_tracker_data1(landmarks):
                              angle[1], angle[2], 0., serial])
 
         # Send osc msg to openvr driver(VMT)
-        send_osc_msg1(tracker_data[0], tracker_data[1], tracker_data[2], tracker_data[3], tracker_data[4],
-                      tracker_data[5], tracker_data[6], 0.)
+        send_osc_msg1(tracker_data[index][0], tracker_data[index][1], tracker_data[index][2], tracker_data[index][3],
+                      tracker_data[index][4], tracker_data[index][5], tracker_data[index][6], tracker_data[index][7])
 
 
 # Set waist data to tracker data
@@ -108,8 +107,9 @@ def set_tracker_data2(landmarks):
 
     # Quaternion x, y, z, w value is example. IT MUST FIXED WITH ADDITIONAL CALCULATION
     # The waist part requires a separate calculation, so it is independent
-    tracker_data.append([10, mid_hip[0] * scaler * waistS, mid_hip[1] * scaler * waistS + height,
-                         mid_hip[2] * scaler * waistS, 0., 0., 0., 0., "waist"])
+    # tracker_data.append([10, mid_hip[0] * scaler * waistS, mid_hip[1] * scaler * waistS + height,
+    #                     mid_hip[2] * scaler * waistS, 0., 0., 0., 0., "waist"])
+    tracker_data.append([10, 0., 0., 0., 0., 0., 0., 0., 0., "waist"])
 
     # Send osc msg to openvr driver(VMT)
     send_osc_msg1(tracker_data[0][0], tracker_data[0][1], tracker_data[0][2], tracker_data[0][3], tracker_data[0][4],
