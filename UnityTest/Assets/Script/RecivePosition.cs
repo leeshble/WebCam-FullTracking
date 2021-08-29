@@ -29,31 +29,27 @@ public class RecivePosition : MonoBehaviour
         float qx = message.GetFloat(6);
         float qy = message.GetFloat(7);
         float qz = message.GetFloat(8);
-        float qw = message.GetFloat(9); 
+        float qw = message.GetFloat(9);
 
         SetBodyPosition(index, px, py, pz, qx, qy, qz, qw);
     }
 
     void SetBodyPosition(string bodyName, float px, float py, float pz, float qx, float qy, float qz, float qw)
     {
-        Quaternion quaternion = (qx, qy, qz, qw);
+        Quaternion rot = Quaternion.identity;
+
+        rot.x = qx;
+        rot.y = qy;
+        rot.z = qz;
+        rot.w = qw;
+
         foreach (Transform child in allChildren)
         {
             if (child.gameObject.name == bodyName)
             {
                 child.position = new Vector3(px, py, pz);
-                child.rotation = ConvertToUnity(quaternion);
+                child.rotation = rot;
             }
         }
-    }
-
-    Quaternion ConvertToUnity(Quaternion input)
-    {
-        return new Quaternion(
-            input.y,
-            -input.z,
-            -input.x,
-            input.w
-        );
     }
 }
