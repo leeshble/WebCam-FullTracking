@@ -1,14 +1,9 @@
-
-import tkinter as tk
-
-import math_module
 import pose_module as pm
 
 
 def main():
-    pm.camera_input('../Examples/2.mp4')
-    #pm.camera_input(0)
-    #pm.camera_input(1)
+    # Change parameter to change input(Camera or videos)
+    pm.camera_input(0)
 
 
 if __name__ == "__main__":
