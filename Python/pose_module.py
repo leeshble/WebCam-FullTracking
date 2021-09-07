@@ -4,20 +4,21 @@ import mediapipe as mp
 import math_module as mm
 import osc_module as osc
 
+
 pose = mp.solutions.pose.Pose(False, 1, True, 0.5, 0.5)
 POSE_LANDMARK = [
     (0, "MPT-Head", (0, 7)),
+    (32, "MPT-neck", (32, 0)),
     (11, "MPT-leftShoulder", (11, 13)),
     (12, "MPT-rightShoulder", (12, 14)),
     (13, "MPT-leftElbow", (15, 17)),
     (14, "MPT-rightElbow", (16, 18)),
-    (15, "MPT-leftHand", (13, 15)),
-    (16, "MPT-rightHand", (14, 16)),
-    (23, "MPT-leftHip", (23, 25)),
-    (24, "MPT-rightHip", (24, 26)),
+    (15, "MPT-leftHand", (15, 34)),
+    (16, "MPT-rightHand", (16, 35)),
+    (33, "MPT-waist", (33, 23)),
     (25, "MPT-leftKnee", (25, 27)),
     (26, "MPT-rightKnee", (26, 28)),
-    (27, "MPT-leftFoot", (27, 26)),
+    (27, "MPT-leftFoot", (27, 29)),
     (28, "MPT-rightFoot", (28, 30))
 ]
 
@@ -30,7 +31,8 @@ def camera_input(input_data):
         if success:
             landmarks = pose_detection(frame)
             if landmarks is not None:
-                conv_data_openvr(get_position_data(landmarks))
+                position_data = get_position_data(landmarks)
+                conv_data_openvr(create_virtual_landmark(position_data))
         fps, p_time = fps_count(p_time)
         print("FPS: %d" % fps)
         cv2.imshow("Capture", frame)
@@ -57,7 +59,7 @@ def get_position_data(landmarks):
         position_data.append([i, landmarks[i].x, landmarks[i].y, landmarks[i].z])
     return position_data
 
-"""
+
 def conv_data_openvr(position_data):
     device_data = []
     for index, device_name, comp_pos in POSE_LANDMARK:
@@ -68,24 +70,36 @@ def conv_data_openvr(position_data):
             [index, 1, 0., position_data[index][1], -position_data[index][2], position_data[index][3], qx, qy, qz, qw])
         osc.osc_send(index, 1, 0., position_data[index][1], -position_data[index][2], position_data[index][3], qx, qy, qz, qw)
     return device_data
-"""
 
 
-def conv_data_openvr(position_data):
-    device_data = []
-    for index, device_name, comp_pos in POSE_LANDMARK :
-        u = mm.Vector(position_data[comp_pos[0]][1], position_data[comp_pos[0]][2], position_data[comp_pos[0]][3])
-        v = mm.Vector(0, 0, 10)
-        qx, qy, qz, qw = mm.landmarks2quaternion(u, v)
-        device_data.append(
-            [index, 1, 0., position_data[index][1], -position_data[index][2], position_data[index][3], qx, qy, qz, qw])
-    # device_data.append([-1, 1, 0., (position_data[7][1] + position_data[8][1]) / 2, (position_data[7][2] + position_data[8][2]) / 2, (position_data[7][1] + position_data[8][1]) / 2])
-        osc.osc_send(index, 1, 0., position_data[index][1], -position_data[index][2], position_data[index][3], qx, qy, qz, qw)
-    return device_data
+def create_virtual_landmark(position_data):
+    # neck
+    x = (position_data[11][1] + position_data[12][1]) / 2
+    y = (position_data[11][2] + position_data[12][2]) / 2
+    z = (position_data[11][3] + position_data[12][3]) / 2
+    position_data.append([32, x, y, z])
 
+    # waist
+    x = (position_data[23][1] + position_data[24][1]) / 2
+    y = (position_data[23][2] + position_data[24][2]) / 2
+    z = (position_data[23][3] + position_data[24][3]) / 2
+    position_data.append([33, x, y, z])
+
+    # left hand
+    x = (position_data[17][1] + position_data[19][1]) / 2
+    y = (position_data[17][2] + position_data[19][2]) / 2
+    z = (position_data[17][3] + position_data[19][3]) / 2
+    position_data.append([34, x, y, z])
+
+    # Right hand
+    x = (position_data[18][1] + position_data[20][1]) / 2
+    y = (position_data[18][2] + position_data[20][2]) / 2
+    z = (position_data[18][3] + position_data[20][3]) / 2
+    position_data.append([35, x, y, z])
+
+    return position_data
 
 def fps_count(p_time):
     c_time = time.time()
     fps = 1 / (c_time - p_time)
-    # avg_fps = (avg_fps + c_time) / 2
     return int(fps), c_time
