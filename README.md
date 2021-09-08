@@ -51,3 +51,7 @@ https://www.youtube.com/watch?v=8labgxufLRM
 
   Please refer to 'OSC Protocol' in the above link
 
+## 3. Program Flow
+
+![화면 캡처 2021-09-08 194115](https://user-images.githubusercontent.com/28009059/132495526-ab5d74f3-fc29-48f4-b602-5546665623ab.png)
+
