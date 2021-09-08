@@ -56,7 +56,7 @@ def pose_detection(frame):
 def get_position_data(landmarks):
     position_data = []
     for i in range(0, 32):
-        position_data.append([i, landmarks[i].x, landmarks[i].y, landmarks[i].z])
+        position_data.append([i, landmarks[i].x, landmarks[i].y - 0.8, landmarks[i].z])
     return position_data
 
 
