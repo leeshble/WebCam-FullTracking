@@ -15,7 +15,7 @@ MonoBehaviour:
   m_PixelRect:
     serializedVersion: 2
     x: 966
-    y: 116
+    y: 51
     width: 1278
     height: 981
   m_ShowMode: 4
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 679, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 67
+  controlID: 56
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 16
+  controlID: 57
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 17
+  controlID: 58
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 966
-    y: 798
+    y: 733
     width: 1000
     height: 258
   m_ViewDataDictionary: {fileID: 0}
@@ -317,21 +317,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Script
+    - Assets/Material
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Script
+  - Assets/Material
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\GitHub\WebCam-FullTracking\UnityTest
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 1e3d0000
-    m_LastClickedID: 15646
+    m_SelectedIDs: 12410000
+    m_LastClickedID: 16658
     m_ExpandedIDs: 00000000163d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -388,7 +388,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000
+    m_ExpandedInstanceIDs: c623000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 1967
-    y: 146
+    y: 81
     width: 276
     height: 910
   m_ViewDataDictionary: {fileID: 0}
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 966
-    y: 146
+    y: 81
     width: 262
     height: 631
   m_ViewDataDictionary: {fileID: 0}
@@ -483,7 +483,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: e2f4ffff02f5ffff04f5ffffa6f7ffffc6f7ffff6af8ffff52fbffffb63c0000
+      m_ExpandedIDs: 70baffff90baffff34bbffff52fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -528,7 +528,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 1229
-    y: 146
+    y: 81
     width: 736
     height: 631
   m_ViewDataDictionary: {fileID: 0}
@@ -543,9 +543,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.035989314, y: 0.9076308, z: -0.14907423}
+    m_Target: {x: 0.03758526, y: -0.79138863, z: 0.019204855}
     speed: 2
-    m_Value: {x: 0.035989314, y: 0.9076308, z: -0.14907423}
+    m_Value: {x: 0.03758526, y: -0.79138863, z: 0.019204855}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -592,13 +592,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.028059065, y: -0.95205307, z: 0.09197641, w: 0.29044816}
+    m_Target: {x: 0.27477875, y: 0.1580461, z: -0.045839846, w: 0.94732714}
     speed: 2
-    m_Value: {x: 0.028058894, y: -0.9520473, z: 0.09197585, w: 0.2904464}
+    m_Value: {x: 0.2747771, y: 0.15804516, z: -0.045839574, w: 0.9473215}
   m_Size:
-    m_Target: 1.0680747
+    m_Target: 2.5680745
     speed: 2
-    m_Value: 1.0680747
+    m_Value: 2.5680745
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -643,7 +643,7 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1537
+    x: 1229
     y: 81
     width: 736
     height: 631
