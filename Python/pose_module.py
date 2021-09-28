@@ -63,12 +63,9 @@ def get_position_data(landmarks):
 def conv_data_openvr(position_data):
     device_data = []
     for index, device_name, comp_pos in POSE_LANDMARK:
-        u = mm.Vector(position_data[comp_pos[0]][1], position_data[comp_pos[0]][2], position_data[comp_pos[0]][3])
-        v = mm.Vector(position_data[comp_pos[1]][1], position_data[comp_pos[1]][2], position_data[comp_pos[1]][3])
-        qx, qy, qz, qw = mm.landmarks2quaternion(u, v)
         device_data.append(
-            [index, 1, 0., position_data[index][1], -position_data[index][2], position_data[index][3], qx, qy, qz, qw])
-        osc.osc_send(index, 1, 0., position_data[index][1], -position_data[index][2], position_data[index][3], qx, qy, qz, qw)
+            [index, 1, 0., -position_data[index][1], -position_data[index][2], -position_data[index][3], 0., 0., 0., 0.])
+        osc.osc_send(index, 1, 0., -position_data[index][1], -position_data[index][2], -position_data[index][3], 0., 0., 0., 0.)
     return device_data
 
 
