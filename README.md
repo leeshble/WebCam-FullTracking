@@ -37,7 +37,7 @@ https://www.youtube.com/watch?v=8labgxufLRM
 
 ## 2. Output
 
-![Pose Landmarks](https://google.github.io/mediapipe/images/mobile/pose_tracking_full_body_landmarks.png)
+![Pose Landmarks](https://mediapipe.dev/images/mobile/pose_tracking_full_body_landmarks.png)
 
 *We use mediapipe landmark output*
  
